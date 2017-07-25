@@ -1,0 +1,10 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="padding_large">64dp</dimen>
+    <dimen name="small">10dp</dimen>
+    <dimen name="padding_medium">42dp</dimen>
+    <dimen name="mid_tex">18sp</dimen>
+    <dimen name="margin_small">5dp</dimen>
+    <dimen name="margin_big">12dp</dimen>
+    <dimen name="big_text">24sp</dimen>
+</resources>
