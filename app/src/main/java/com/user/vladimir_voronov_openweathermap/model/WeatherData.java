@@ -10,6 +10,7 @@ public class WeatherData {
     @SerializedName("weather") private List<Weather> weather = null;
     @SerializedName("main") private Main main;
     @SerializedName("name") private String name;
+    @SerializedName("dt") private Long data;
 
     public Coord getCoord() {
         return coord;
@@ -41,5 +42,13 @@ public class WeatherData {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getData() {
+        return data;
+    }
+
+    public void setData(Long data) {
+        this.data = data;
     }
 }

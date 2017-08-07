@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/margin_small"
-    android:layout_marginLeft="@dimen/margin_big"
-    android:layout_marginRight="@dimen/margin_big"
-    android:layout_marginTop="@dimen/margin_small">
-
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/big_text"
-        tools:text="My location" />
+    android:layout_marginLeft="@dimen/small"
+    android:layout_marginRight="@dimen/small">
 
     <ImageView
         android:id="@+id/weatherIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/location"
-        android:contentDescription="@string/weatherIco"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/weatherIco" />
 
     <TextView
         android:id="@+id/temperature"
@@ -30,9 +19,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/location"
-        android:gravity="end|bottom"
-        android:textSize="@dimen/mid_tex"
+        android:textSize="@dimen/mid_text"
         tools:text="100C" />
 
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/large"
+        android:layout_marginRight="@dimen/large"
+        android:textSize="@dimen/mid_text"
+        tools:text="My location" />
 </RelativeLayout>

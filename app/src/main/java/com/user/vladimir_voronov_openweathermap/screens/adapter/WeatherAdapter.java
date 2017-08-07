@@ -22,11 +22,21 @@ import static android.support.v7.widget.RecyclerView.ViewHolder;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherAdapterViewHolder> {
 
+    private static WeatherAdapterOnClick weatherAdapterOnClick;
+
     private List<WeatherRealm> data = new ArrayList<>();
+
+    public WeatherAdapter(WeatherAdapterOnClick adapterOnClick) {
+        weatherAdapterOnClick = adapterOnClick;
+    }
+
+    public List<WeatherRealm> getData() {
+        return data;
+    }
 
     public void setData(List<WeatherRealm> newData) {
         final WeatherDiffCallback diffCallback = new WeatherDiffCallback(this.data, newData);
-        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback, true);
         this.data.clear();
         this.data.addAll(newData);
         diffResult.dispatchUpdatesTo(this);
@@ -39,7 +49,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
 
     @Override public void onBindViewHolder(WeatherAdapterViewHolder holder, int position) {
         WeatherRealm weatherToday = data.get(position);
-
         holder.bind(weatherToday, position);
     }
 
@@ -47,15 +56,17 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
         return data.size();
     }
 
-    static class WeatherAdapterViewHolder extends ViewHolder {
+    static class WeatherAdapterViewHolder extends ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.location) TextView weatherLocation;
         @BindView(R.id.temperature) TextView weatherTemp;
         @BindView(R.id.weatherIcon) ImageView weatherId;
 
+
         WeatherAdapterViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
         void bind(WeatherRealm weatherToday, int position) {
@@ -64,7 +75,10 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
             weatherLocation.setText(weatherToday.getCityName());
             weatherTemp.setText(itemView.getContext().getString(R.string.temperature_template,
                     weatherToday.getTemp().intValue()));
-            itemView.setTag(weatherToday.getCityName());
+        }
+
+        @Override public void onClick(View view) {
+            weatherAdapterOnClick.onClick(weatherLocation.getText().toString());
         }
     }
 }

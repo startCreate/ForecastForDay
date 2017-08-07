@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="divider">#c7c6c7</color>
+    <color name="mainActivity">#e8eaf6</color>
+    <color name="detailActivity">#9fa8da</color>
+    <color name="text_color_secondary">#000000</color>
+    <color name="button_color">#ffffff</color>
+    <color name="black">#000000</color>
 </resources>

@@ -2,6 +2,8 @@ package com.user.vladimir_voronov_openweathermap.ulils;
 
 import com.user.vladimir_voronov_openweathermap.R;
 
+import java.util.Date;
+
 public class WeatherUtils {
 
     private WeatherUtils() {
@@ -24,5 +26,9 @@ public class WeatherUtils {
             return R.drawable.cloudy;
 
         return R.drawable.storm;
+    }
+
+    public static String convertData(Long unixData) {
+        return Constants.DATAFORMAT.format(new Date(unixData * 1000));
     }
 }

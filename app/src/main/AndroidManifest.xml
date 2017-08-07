@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.user.vladimir_voronov_openweathermap">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".App"
@@ -19,14 +20,27 @@
             android:label="@string/name_app">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
-        <activity android:name=".screens.location.AddLocationActivity"
-            android:label="@string/add_location_activity"/>
+        <activity
+            android:name=".screens.location.AddLocationActivity"
+            android:label="@string/add_location_activity"
+            android:parentActivityName=".screens.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".screens.main.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".screens.detail.WeatherDetailActivity"
+            android:label="@string/detail_activity"
+            android:parentActivityName=".screens.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".screens.main.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

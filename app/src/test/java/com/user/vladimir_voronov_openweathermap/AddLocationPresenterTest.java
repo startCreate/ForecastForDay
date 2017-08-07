@@ -10,7 +10,6 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -19,9 +18,9 @@ import io.reactivex.Completable;
 import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.schedulers.Schedulers;
 
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class AddLocationPresenterTest {
 
@@ -30,23 +29,24 @@ public class AddLocationPresenterTest {
     private AddLocationPresenter presenter;
     @Mock private AddLocationView$$State viewState;
 
+    @BeforeClass
+    public static void setupClass() {
+        RxAndroidPlugins
+                .setInitMainThreadSchedulerHandler(schedulerCallable -> Schedulers.trampoline());
+    }
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         presenter = new AddLocationPresenter(interactor);
         presenter.setViewState(viewState);
     }
-    @BeforeClass
-    public static void setupClass() {
-        RxAndroidPlugins
-                .setInitMainThreadSchedulerHandler(schedulerCallable-> Schedulers.trampoline());
-    }
 
     @Test public void onBtnOk_Success() {
         String location = "location";
         assertTrue(!location.trim().isEmpty());
 
-        Mockito.when(interactor.fetchData(location)).thenReturn(Completable.complete());
+        when(interactor.fetchData(location)).thenReturn(Completable.complete());
         presenter.onBtnOK(location);
 
         verify(viewState).close();
@@ -54,6 +54,9 @@ public class AddLocationPresenterTest {
 
     @Test public void onBtnOk_Failed() {
         String location = "";
-        assertFalse(!location.trim().isEmpty());
+        assertTrue(location.trim().isEmpty());
+
+        presenter.onBtnOK(location);
+        verify(viewState).showError("Input Location");
     }
 }

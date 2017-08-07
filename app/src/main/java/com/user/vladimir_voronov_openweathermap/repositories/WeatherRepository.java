@@ -15,6 +15,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 import io.realm.Sort;
 
 @Singleton
@@ -63,18 +64,23 @@ public class WeatherRepository {
                 }));
     }
 
-    public Completable removeItem(String location) {
-        return RxRealm.doTransactional(realm -> {
-            WeatherRealm result = realm.where(WeatherRealm.class).equalTo(Constants.FIELD_CITY_NAME,
-                    location).findFirst();
-            if (!result.isCurrentLocation()) {
-                result.deleteFromRealm();
-            }
-        });
+    public Flowable<List<WeatherRealm>> listenWeather() {
+        return RxRealm.listenList(realm -> realm.where(WeatherRealm.class)
+                .findAllSorted(Constants.FIELD_CURRENT_LOCATION, Sort.DESCENDING, Constants.FIELD_CITY_NAME, Sort.ASCENDING));
     }
 
-    public Flowable<List<WeatherRealm>> listenWeather() {
-        return RxRealm.listenList(realm -> realm.where(WeatherRealm.class).findAll()
-                .sort(Constants.FIELD_CURRENT_LOCATION, Sort.DESCENDING));
+    public Completable remove(WeatherRealm weatherRealm) {
+        return RxRealm.doTransactional(realm -> realm.where(WeatherRealm.class)
+                .equalTo(Constants.FIELD_CITY_NAME, weatherRealm.getCityName())
+                .findFirst().deleteFromRealm());
+    }
+
+    public Completable addToDB(WeatherRealm weatherRealm) {
+        return RxRealm.doTransactional(realm -> realm.insertOrUpdate(weatherRealm));
+    }
+
+    public Maybe<WeatherRealm> getWeather(String location) {
+        return RxRealm.getElement(realm -> realm.where(WeatherRealm.class)
+                .equalTo(Constants.FIELD_CITY_NAME, location).findFirst());
     }
 }

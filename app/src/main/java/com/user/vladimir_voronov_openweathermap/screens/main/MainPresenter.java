@@ -4,6 +4,7 @@ import android.location.Location;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.user.vladimir_voronov_openweathermap.interactors.WeatherInteractor;
+import com.user.vladimir_voronov_openweathermap.model.WeatherRealm;
 import com.user.vladimir_voronov_openweathermap.screens.base.BasePresenter;
 
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class MainPresenter extends BasePresenter<MainView> {
 
     private WeatherInteractor interactor;
+    private WeatherRealm currentItemForDelete;
 
     @Inject public MainPresenter(WeatherInteractor interactor) {
         this.interactor = interactor;
@@ -24,11 +26,18 @@ public class MainPresenter extends BasePresenter<MainView> {
         refreshData();
     }
 
-    void removeItem(String location) {
-        addDisposable(interactor.remove(location)
+    private WeatherRealm getCurrentItemForDelete() {
+        return currentItemForDelete;
+    }
+
+    private void setCurrentItemForDelete(WeatherRealm currentItemForDelete) {
+        this.currentItemForDelete = currentItemForDelete;
+    }
+
+    void addItemOnUndo() {
+        addDisposable(interactor.addOnUndo(getCurrentItemForDelete())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-                }, this::handleError));
+                .subscribe());
     }
 
     void showMyLocation(Location location) {
@@ -42,6 +51,14 @@ public class MainPresenter extends BasePresenter<MainView> {
         addDisposable(interactor.updateWeather()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(getViewState()::stopRefreshingLayout,
+                        this::handleError));
+    }
+
+    void onItemSwiped(WeatherRealm weatherRealm) {
+        setCurrentItemForDelete(weatherRealm);
+        addDisposable(interactor.remove(weatherRealm)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> getViewState().showMessage(weatherRealm.getCityName()),
                         this::handleError));
     }
 

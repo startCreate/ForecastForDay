@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 import io.reactivex.schedulers.Schedulers;
 
 @Singleton
@@ -39,11 +40,19 @@ public class WeatherInteractor {
                 .subscribeOn(Schedulers.io());
     }
 
-    public Completable remove(String location) {
-        return repository.removeItem(location).subscribeOn(Schedulers.io());
-    }
-
     public Flowable<List<WeatherRealm>> listenWeather() {
         return repository.listenWeather().subscribeOn(Schedulers.io());
+    }
+
+    public Completable addOnUndo(WeatherRealm weatherRealm) {
+        return repository.addToDB(weatherRealm);
+    }
+
+    public Completable remove(WeatherRealm weatherRealm) {
+        return repository.remove(weatherRealm).subscribeOn(Schedulers.io());
+    }
+
+    public Maybe<WeatherRealm> getWeather(String location) {
+        return repository.getWeather(location).subscribeOn(Schedulers.io());
     }
 }

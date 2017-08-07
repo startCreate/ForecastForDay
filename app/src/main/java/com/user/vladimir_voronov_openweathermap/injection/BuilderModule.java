@@ -1,6 +1,8 @@
 package com.user.vladimir_voronov_openweathermap.injection;
 
 
+import com.user.vladimir_voronov_openweathermap.screens.detail.WeatherDetailActivity;
+import com.user.vladimir_voronov_openweathermap.screens.detail.WeatherDetailModule;
 import com.user.vladimir_voronov_openweathermap.screens.location.AddLocationActivity;
 import com.user.vladimir_voronov_openweathermap.screens.location.LocationActivityModule;
 import com.user.vladimir_voronov_openweathermap.screens.main.MainActivity;
@@ -17,5 +19,6 @@ abstract class BuilderModule {
     @ContributesAndroidInjector(modules = LocationActivityModule.class)
     abstract AddLocationActivity bindLocationActivityInjectorFactory();
 
-
+    @ContributesAndroidInjector(modules = WeatherDetailModule.class)
+    abstract WeatherDetailActivity bindWeatherDetailActivityInjectorFactory();
 }

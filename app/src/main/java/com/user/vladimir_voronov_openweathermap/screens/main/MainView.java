@@ -18,7 +18,12 @@ public interface MainView extends BaseView {
     @StateStrategyType(value = OneExecutionStateStrategy.class)
     void openAddLocationScreen();
 
+    @StateStrategyType(value = OneExecutionStateStrategy.class)
+    void openDetailScreen(String location);
+
     void stopRefreshingLayout();
 
     void addDisposable(Disposable disposable);
+
+    void showMessage(String message);
 }
