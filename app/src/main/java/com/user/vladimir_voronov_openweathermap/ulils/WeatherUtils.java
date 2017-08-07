@@ -29,6 +29,6 @@ public class WeatherUtils {
     }
 
     public static String convertData(Long unixData) {
-        return Constants.DATAFORMAT.format(new Date(unixData * 1000));
+        return DateUtils.getDataFormat().format(new Date(unixData * 1000));
     }
 }
