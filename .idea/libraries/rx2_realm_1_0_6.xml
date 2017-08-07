@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="rx2-realm-1.0.6">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rx2-realm-1.0.6.aar/54a61de99c891acd9d068701e9063248/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rx2-realm-1.0.6.aar/54a61de99c891acd9d068701e9063248/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.popalay/rx2-realm/1.0.6/e5c517ada8951344d5f01efcaab6420ac270e807/rx2-realm-1.0.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
